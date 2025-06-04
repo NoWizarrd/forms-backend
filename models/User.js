@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   name: String,
-  password: String, // если реализуем логин через backend
+  password: String,
   createdAt: { type: Date, default: Date.now }
 });
 
