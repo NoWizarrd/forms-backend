@@ -1,4 +1,4 @@
-const Form = require('../models/Forms');
+const Form = require('../models/Form');
 
 exports.createForm = async (req, res) => {
   try {
