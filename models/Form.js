@@ -1,15 +1,15 @@
-
 const mongoose = require('mongoose');
 
 const QuestionSchema = new mongoose.Schema({
-  questionText: { type: String, required: true },
-  questionType: { type: String, enum: ['text', 'single', 'multiple'], required: true },
-  options: [String], 
+  name: { type: String, required: true }, // новое поле
+  type: { type: String, enum: ['text', 'dropdown'], required: true },
+  label: { type: String, required: true },
+  options: [String] // для dropdown может быть null или массив
 });
 
 const FormSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  description: String,
+  description: { type: String, default: null },
   questions: [QuestionSchema],
   creatorEmail: { type: String, required: true }, 
   createdAt: { type: Date, default: Date.now }

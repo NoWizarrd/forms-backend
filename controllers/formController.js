@@ -8,7 +8,25 @@ exports.createForm = async (req, res) => {
       return res.status(400).json({ message: 'creatorEmail is required' });
     }
 
-    const newForm = new Form({ title, description, questions, creatorEmail });
+    const cleanedQuestions = questions.map(q => {
+      if (q.type === 'text') {
+        return {
+          name: q.name,
+          type: q.type,
+          label: q.label
+          // не передаем options вообще
+        };
+      } else {
+        return {
+          name: q.name,
+          type: q.type,
+          label: q.label,
+          options: q.options
+        };
+      }
+    });
+
+    const newForm = new Form({ title, description, questions: cleanedQuestions, creatorEmail });
     const savedForm = await newForm.save();
     res.status(201).json(savedForm);
   } catch (error) {
@@ -16,6 +34,7 @@ exports.createForm = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 
 exports.getFormById = async (req, res) => {
@@ -39,6 +58,16 @@ exports.getAllForms = async (req, res) => {
 
     const forms = await Form.find({ creatorEmail: email });
     res.json(forms);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteForm = async (req, res) => {
+  try {
+    const form = await Form.findByIdAndDelete(req.params.id);
+    if (!form) return res.status(404).json({ error: 'Form not found' });
+    res.json({ message: 'Form successfully deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
