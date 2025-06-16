@@ -47,6 +47,21 @@ exports.getFormById = async (req, res) => {
   }
 };
 
+exports.getFormsByEmail = async (req, res) => {
+  try {
+    const email = req.params.email;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    const forms = await Form.find({ creatorEmail: email });
+    res.json(forms);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
 exports.getAllForms = async (req, res) => {
   try {
