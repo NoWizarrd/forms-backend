@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const QuestionSchema = new mongoose.Schema({
   name: { type: String, required: true }, // новое поле
-  type: { type: String, enum: ['text', 'dropdown'], required: true },
+  type: { type: String, enum: ['text', 'dropdown', 'number', 'checkbox'], required: true },
   label: { type: String, required: true },
   options: [String] // для dropdown может быть null или массив
 });
