@@ -13,8 +13,8 @@ const responseSchema = new mongoose.Schema(
     },
     answers: [
       {
-        questionId: {
-          type: mongoose.Schema.Types.ObjectId,
+        name: {
+          type: string,
           required: true
         },
         answer: mongoose.Schema.Types.Mixed
